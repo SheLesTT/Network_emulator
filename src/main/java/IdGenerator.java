@@ -1,12 +1,18 @@
 public class IdGenerator {
-
+    private static IdGenerator network_id_generator = new IdGenerator();
     int third_bit = 0;
     int fouth_bit = 1;
+
+    private IdGenerator(){}
+
+    public static IdGenerator genGenrator(){
+        return network_id_generator;
+    }
 
     public void  updateBits(int created_network_size){
         fouth_bit += created_network_size;
         if (fouth_bit > 254){
-            fouth_bit = 1;
+            fouth_bit = fouth_bit-254;
             third_bit +=1;
         }
     }
