@@ -21,7 +21,7 @@ public class IdGenerator {
         return id;
     }
     public String generateMaxSubnetId(int network_size){
-        String max_id = "192.168." + Integer.toString(third_bit) + "." + Integer.toString(fouth_bit+ network_size);
+        String max_id = "192.168." + Integer.toString(third_bit) + "." + Integer.toString(fouth_bit+ network_size-1);
         return max_id;
     }
 

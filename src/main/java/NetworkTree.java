@@ -3,7 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import javax.swing.*;
+import javax.swing.tree.DefaultTreeModel;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -11,12 +18,22 @@ import javax.swing.*;
  */
 public class NetworkTree extends javax.swing.JFrame {
 
+    IdGenerator gen = IdGenerator.genGenrator();
+    Network net = new Network();
+    Creator creator = new Creator(net, gen);
+    Router router =creator.createRouter(28);
+
     /**
      * Creates new form NetworkTree
      */
     public NetworkTree() {
         initComponents();
+
+        router.addPorts(creator);
+        router.Print();
+        net.addRouter(router);
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,24 +50,18 @@ public class NetworkTree extends javax.swing.JFrame {
         enter_amount_routers_label = new javax.swing.JLabel();
         create_nerwork = new javax.swing.JButton();
         set_mask_25 = new javax.swing.JRadioButton();
-        set_mask_25.setActionCommand("25");
         set_mask_26 = new javax.swing.JRadioButton();
-        set_mask_26.setActionCommand("26");
         set_mask_27 = new javax.swing.JRadioButton();
-        set_mask_27.setActionCommand("27");
         set_mask_28 = new javax.swing.JRadioButton();
-        set_mask_28.setActionCommand("28");
         set_mask_24 = new javax.swing.JRadioButton();
-        set_mask_24.setActionCommand("24");
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         select_mask_option = new javax.swing.JButton();
-        buttonGroup1.add(set_mask_24);
-        buttonGroup1.add(set_mask_25);
+        jScrollPane2 = new javax.swing.JScrollPane();
+        network_tree = new javax.swing.JTree();
+        save_data = new javax.swing.JButton();
+        read_data = new javax.swing.JButton();
 
-        buttonGroup1.add(set_mask_26);
-        buttonGroup1.add(set_mask_27);
-        buttonGroup1.add(set_mask_28);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         enter_routers_amount_field.addActionListener(new java.awt.event.ActionListener() {
@@ -62,6 +73,11 @@ public class NetworkTree extends javax.swing.JFrame {
         enter_amount_routers_label.setText("Введите необходимое число маршрутизаторов ");
 
         create_nerwork.setText("Создать сеть ");
+        create_nerwork.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                create_nerworkActionPerformed(evt);
+            }
+        });
 
         set_mask_25.setText("25");
 
@@ -89,30 +105,64 @@ public class NetworkTree extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
+        network_tree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane2.setViewportView(network_tree);
+
+        save_data.setText("Save data");
+        save_data.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    save_dataActionPerformed(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        read_data.setText("Read data ");
+        read_data.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    read_dataActionPerformed(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(enter_amount_routers_label, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(enter_routers_amount_field, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(67, 67, 67)
-                                .addComponent(set_mask_24, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(set_mask_26, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(set_mask_27, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(set_mask_28, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(130, 130, 130)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(create_nerwork)
                         .addGap(219, 219, 219))
-                    .addComponent(select_mask_option))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(read_data)
+                            .addComponent(save_data))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(enter_amount_routers_label, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(enter_routers_amount_field, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(67, 67, 67)
+                                        .addComponent(set_mask_24, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(set_mask_26, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(set_mask_27, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(set_mask_28, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(select_mask_option)))))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(0, 287, Short.MAX_VALUE)
@@ -122,9 +172,8 @@ public class NetworkTree extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(enter_amount_routers_label)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,18 +182,33 @@ public class NetworkTree extends javax.swing.JFrame {
                                 .addComponent(enter_routers_amount_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(set_mask_24)))
+                                .addComponent(set_mask_24))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(13, 13, 13)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(52, 52, 52)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(create_nerwork)
                             .addComponent(set_mask_26))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(select_mask_option)
+                        .addGap(4, 4, 4)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(set_mask_27)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(set_mask_27)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(set_mask_28)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(select_mask_option)
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addComponent(set_mask_28))
+                    .addComponent(save_data))
+                .addGap(18, 18, 18)
+                .addComponent(read_data)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(55, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -178,6 +242,29 @@ public class NetworkTree extends javax.swing.JFrame {
        ButtonModel selected_button =  buttonGroup1.getSelection();
        jTextArea1.setText(selected_button.getActionCommand());
     }//GEN-LAST:event_select_mask_optionActionPerformed
+
+    private void create_nerworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_nerworkActionPerformed
+        network_tree.setModel(new DefaultTreeModel( net.addInfoToGui()));
+    }//GEN-LAST:event_create_nerworkActionPerformed
+
+    private void save_dataActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_save_dataActionPerformed
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        String data = mapper.writeValueAsString(net);
+        System.out.println(data);
+        mapper.writeValue(new File("output.json"), net);
+//        for(Router router: net.routers){
+//           String rout_data = mapper.writeValueAsString(router);
+//           System.out.println(rout_data);
+        }
+//GEN-LAST:event_save_dataActionPerformed
+
+    private void read_dataActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_read_dataActionPerformed
+        ObjectMapper mapper = new ObjectMapper();
+        Network network = mapper.readValue(new File("output.json"), Network.class);
+        System.out.println(network.getNum_routers());
+    }//GEN-LAST:event_read_dataActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -221,7 +308,11 @@ public class NetworkTree extends javax.swing.JFrame {
     private javax.swing.JTextField enter_routers_amount_field;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTree network_tree;
+    private javax.swing.JButton read_data;
+    private javax.swing.JButton save_data;
     private javax.swing.JButton select_mask_option;
     private javax.swing.JRadioButton set_mask_24;
     private javax.swing.JRadioButton set_mask_25;

@@ -1,3 +1,4 @@
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.ArrayList;
 
 public class RouterPort implements IdTable {
@@ -40,11 +41,14 @@ public class RouterPort implements IdTable {
         this.min_subnet_id = min_subnet_id;
     }
 
+    public void addNode(){
+        DefaultMutableTreeNode port_node = new DefaultMutableTreeNode("port + " + id );
+    }
     public void Print(){
         System.out.println("id " + id + " max id " + max_subnet_id +" min id " + min_subnet_id);
-        for (IdTable node: linked_nodes){
-            System.out.println(node.node_name + node.getId());
-        }
+//        for (IdTable node: linked_nodes){
+//            System.out.println(node.node_name + node.getId());
+//        }
     }
 
 }
