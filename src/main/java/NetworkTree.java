@@ -250,32 +250,26 @@ public class NetworkTree extends javax.swing.JFrame {
 
     private void save_dataActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_save_dataActionPerformed
 
-        HashMap<String, IdTableWrapper> modified_map = new HashMap<>();
-//        for (Map.Entry<String, IdTable> entry : net.all_nodes.entrySet()) {
-//            String key = entry.getKey();
-//            IdTable idTable = entry.getValue();
 
-        net.modifHashMap();
 
+        net.prepareForWriting();
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         String data = mapper.writeValueAsString(net);
         System.out.println(data);
         mapper.writeValue(new File("output.json"), net);
-//        for(Router router: net.routers){
-//           String rout_data = mapper.writeValueAsString(router);
-//           System.out.println(rout_data);
+
         }
 //GEN-LAST:event_save_dataActionPerformed
 
     private void read_dataActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_read_dataActionPerformed
         ObjectMapper mapper = new ObjectMapper();
         Network network = mapper.readValue(new File("output.json"), Network.class);
-        network.unpackModifiedHashmap();
         Router rout = network.routers.get(0);
         rout.setNet(network);
-        network.printModifiedMap();
-        System.out.println(network.all_nodes.get("192.168.0.1"));
+//        network.printModifiedMap();
+        network.finishReading();
+        System.out.println(network.all_nodes.get("192.168.0.1").getId());
 //        rout.Print();
 
     }//GEN-LAST:event_read_dataActionPerformed
