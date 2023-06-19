@@ -1,12 +1,17 @@
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
 import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RouterPort implements IdTable {
     private String id ;
+    @JsonProperty
+    private String type = "RouterPort";
     private String max_subnet_id ;
     private String min_subnet_id;
-
-    ArrayList<IdTable>  linked_nodes = null;
+//    @JsonProperty
+//    Router routerLink;
+    ArrayList<String>  linked_nodes = new ArrayList<>();
 
     public RouterPort(){}
 
@@ -41,8 +46,12 @@ public class RouterPort implements IdTable {
         this.min_subnet_id = min_subnet_id;
     }
 
-    public void addNode(){
+    public void attachSubNet(){
+
+    }
+    public MutableTreeNode addTreeNode(){
         DefaultMutableTreeNode port_node = new DefaultMutableTreeNode("port + " + id );
+        return port_node;
     }
     public void Print(){
         System.out.println("id " + id + " max id " + max_subnet_id +" min id " + min_subnet_id);

@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  *
@@ -248,6 +249,14 @@ public class NetworkTree extends javax.swing.JFrame {
     }//GEN-LAST:event_create_nerworkActionPerformed
 
     private void save_dataActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_save_dataActionPerformed
+
+        HashMap<String, IdTableWrapper> modified_map = new HashMap<>();
+//        for (Map.Entry<String, IdTable> entry : net.all_nodes.entrySet()) {
+//            String key = entry.getKey();
+//            IdTable idTable = entry.getValue();
+
+        net.modifHashMap();
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         String data = mapper.writeValueAsString(net);
@@ -262,7 +271,13 @@ public class NetworkTree extends javax.swing.JFrame {
     private void read_dataActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_read_dataActionPerformed
         ObjectMapper mapper = new ObjectMapper();
         Network network = mapper.readValue(new File("output.json"), Network.class);
-        System.out.println(network.getNum_routers());
+        network.unpackModifiedHashmap();
+        Router rout = network.routers.get(0);
+        rout.setNet(network);
+        network.printModifiedMap();
+        System.out.println(network.all_nodes.get("192.168.0.1"));
+//        rout.Print();
+
     }//GEN-LAST:event_read_dataActionPerformed
 
 
