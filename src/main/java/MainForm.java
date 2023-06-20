@@ -3,11 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 /**
@@ -68,6 +72,7 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         show_network_tree = new javax.swing.JTree();
         open_find_pass_panel_but = new javax.swing.JButton();
+        save_network_button = new javax.swing.JButton();
         find_path_frame = new javax.swing.JFrame();
         jPanel2 = new javax.swing.JPanel();
         select_starting_node_comboBox = new JComboBox<Nodeble>();
@@ -76,12 +81,10 @@ public class MainForm extends javax.swing.JFrame {
         select_final_node_comboBox = new JComboBox<Nodeble>();
         back_to_tree_view_button = new javax.swing.JButton();
         find_path_buttom = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        network_tree = new javax.swing.JTree();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        Path_text_area = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
         create_network = new javax.swing.JButton();
-        starting_node = new javax.swing.JTextField();
-        node_to_search = new javax.swing.JTextField();
-        find_node = new javax.swing.JButton();
         routers_amount_field = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         set_amount_of_routers_but = new javax.swing.JButton();
@@ -91,6 +94,7 @@ public class MainForm extends javax.swing.JFrame {
         radio_but_mask_length_25 = new javax.swing.JRadioButton();
         radio_but_mask_length_24 = new javax.swing.JRadioButton();
         create_router_with_chousen_mask = new javax.swing.JButton();
+        load_network_button = new javax.swing.JButton();
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         show_network_tree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
@@ -103,14 +107,27 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
+        save_network_button.setText("save network");
+        save_network_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    save_network_buttonActionPerformed(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addComponent(open_find_pass_panel_but)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(open_find_pass_panel_but)
+                    .addComponent(save_network_button))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -123,7 +140,9 @@ public class MainForm extends javax.swing.JFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(152, 152, 152)
-                        .addComponent(open_find_pass_panel_but)))
+                        .addComponent(open_find_pass_panel_but)
+                        .addGap(81, 81, 81)
+                        .addComponent(save_network_button)))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -156,6 +175,10 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
+        Path_text_area.setColumns(20);
+        Path_text_area.setRows(5);
+        jScrollPane2.setViewportView(Path_text_area);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -177,8 +200,13 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(back_to_tree_view_button)
                 .addGap(56, 56, 56))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(207, 207, 207)
-                .addComponent(find_path_buttom)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(195, 195, 195)
+                        .addComponent(find_path_buttom))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -192,9 +220,11 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(select_starting_node_comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(select_final_node_comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
                 .addComponent(find_path_buttom)
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
                 .addComponent(back_to_tree_view_button)
                 .addGap(56, 56, 56))
         );
@@ -214,27 +244,14 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jButton1.setText("jButton1");
 
-        treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
-        network_tree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        jScrollPane1.setViewportView(network_tree);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         create_network.setText("Create network");
         create_network.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 create_networkActionPerformed(evt);
-            }
-        });
-
-        starting_node.setText("jTextField1");
-
-        node_to_search.setText("jTextField2");
-
-        find_node.setText("Find path");
-        find_node.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                find_nodeActionPerformed(evt);
             }
         });
 
@@ -285,96 +302,88 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
+        load_network_button.setText("load_network");
+        load_network_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    load_network_buttonActionPerformed(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(starting_node, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
-                .addComponent(node_to_search, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(create_network)
-                .addGap(101, 101, 101))
-            .addGroup(layout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(76, 76, 76)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(122, 122, 122)
-                        .addComponent(find_node))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(295, 295, 295)
-                        .addComponent(radio_but_mask_length_24, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(68, 68, 68)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(radio_but_mask_length_25, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(58, 58, 58)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(routers_amount_field, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(set_amount_of_routers_but))
-                                    .addGap(53, 53, 53)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(radio_but_mask_length_27, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(0, 8, Short.MAX_VALUE))
-                                        .addComponent(radio_but_mask_length_26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(radio_but_mask_length_28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addComponent(create_router_with_chousen_mask)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                    .addComponent(radio_but_mask_length_24, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radio_but_mask_length_25, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(121, 121, 121)
+                .addComponent(routers_amount_field, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(radio_but_mask_length_28, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radio_but_mask_length_27, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radio_but_mask_length_26, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(250, 250, 250))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(126, Short.MAX_VALUE)
+                .addComponent(load_network_button, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(76, 76, 76)
+                .addComponent(create_network, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(240, 240, 240))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(84, 84, 84)
+                .addComponent(set_amount_of_routers_but)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(create_router_with_chousen_mask)
+                .addGap(146, 146, 146))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(99, 99, 99)
+                .addComponent(radio_but_mask_length_24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(node_to_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(starting_node, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(create_network))
+                    .addComponent(jLabel1)
+                    .addComponent(radio_but_mask_length_25))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(find_node)
-                        .addGap(2, 2, 2)
-                        .addComponent(radio_but_mask_length_24)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(radio_but_mask_length_25))
-                        .addGap(10, 10, 10)
+                        .addGap(15, 15, 15)
+                        .addComponent(radio_but_mask_length_26, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(routers_amount_field, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(radio_but_mask_length_26))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(radio_but_mask_length_27, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(set_amount_of_routers_but))
+                            .addComponent(radio_but_mask_length_27)
+                            .addComponent(routers_amount_field, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radio_but_mask_length_28)
-                        .addGap(8, 8, 8)
-                        .addComponent(create_router_with_chousen_mask, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(create_router_with_chousen_mask, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(create_network, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(load_network_button, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(set_amount_of_routers_but)))
+                        .addGap(0, 76, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void find_nodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_find_nodeActionPerformed
-        PathFinder finder = new PathFinder(net);
-        String startingNode = starting_node.getText();
-        String nodeToFind = node_to_search.getText();
-        finder.BFS(startingNode, nodeToFind);
-    }//GEN-LAST:event_find_nodeActionPerformed
 
     private void create_networkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_networkActionPerformed
 //       network_tree.setModel(new DefaultTreeModel( net.addInfoToGui()));
@@ -486,6 +495,7 @@ public class MainForm extends javax.swing.JFrame {
         select_final_node_comboBox.setRenderer(new NodebleListCellRender());
         select_final_node_comboBox.setModel(endComboBoxModel);
 
+
         find_path_frame.setVisible(true);
         find_path_frame.setSize(700, 700);
 
@@ -506,9 +516,43 @@ public class MainForm extends javax.swing.JFrame {
         PathFinder finder = new PathFinder(net);
         String startingNode = start_node.getIp();
         String nodeToFind = end_node.getIp();
-        finder.BFS(startingNode, nodeToFind);
+        String path_str = finder.BFS(startingNode, nodeToFind);
+        Path_text_area.setText(path_str);
 //       System.out.println(select_final_node_comboBox.getSelectedItem());
     }//GEN-LAST:event_find_path_buttomActionPerformed
+
+    private void save_network_buttonActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_save_network_buttonActionPerformed
+
+        net.prepareForWriting();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        // delete in a final version
+        String data = mapper.writeValueAsString(net);
+        System.out.println(data);
+
+        mapper.writeValue(new File("output.json"), net);
+
+    }//GEN-LAST:event_save_network_buttonActionPerformed
+
+    private void load_network_buttonActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_load_network_buttonActionPerformed
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("."));
+        int response = fileChooser.showOpenDialog(null);
+
+        String file = null;
+        if(response == JFileChooser.APPROVE_OPTION){
+            file = fileChooser.getSelectedFile().getAbsolutePath();
+            System.out.println(file);
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        net = mapper.readValue(new File(file), Network.class);
+
+        net.finishReading();
+        net.setNetToNodes();
+//        System.out.println(network.all_nodes.get("192.168.0.0").getIp());
+    }//GEN-LAST:event_load_network_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -546,20 +590,20 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea Path_text_area;
     private javax.swing.JLabel Select_starting_node_label;
     private javax.swing.JButton back_to_tree_view_button;
     private javax.swing.JButton create_network;
     private javax.swing.JButton create_router_with_chousen_mask;
-    private javax.swing.JButton find_node;
     private javax.swing.JButton find_path_buttom;
     private javax.swing.JFrame find_path_frame;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTree network_tree;
-    private javax.swing.JTextField node_to_search;
+    private javax.swing.JButton load_network_button;
     private javax.swing.JButton open_find_pass_panel_but;
     private javax.swing.JRadioButton radio_but_mask_length_24;
     private javax.swing.JRadioButton radio_but_mask_length_25;
@@ -567,6 +611,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JRadioButton radio_but_mask_length_27;
     private javax.swing.JRadioButton radio_but_mask_length_28;
     private javax.swing.JTextField routers_amount_field;
+    private javax.swing.JButton save_network_button;
     private JComboBox<Nodeble> select_final_node_comboBox;
     private javax.swing.JLabel select_final_node_label;
     private JComboBox<Nodeble> select_starting_node_comboBox;
@@ -574,6 +619,5 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.ButtonGroup set_mask_length_group;
     private javax.swing.JFrame show_network_frame;
     private javax.swing.JTree show_network_tree;
-    private javax.swing.JTextField starting_node;
     // End of variables declaration//GEN-END:variables
 }

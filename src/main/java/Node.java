@@ -1,14 +1,24 @@
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
-import java.security.PublicKey;
 import java.util.ArrayList;
 
-public class Node extends NetworkComponent implements IpTable, Nodeble {
+public class Node implements IpTable, Nodeble {
+
+    @JsonIgnore
     Network net;
+    @JsonProperty
     private String ip;
+    @JsonProperty
     private String type = "Node";
+    @JsonProperty
     int number;
+    @JsonProperty
     ArrayList<String> linked_nodes = new ArrayList<>();
+
+    public Node(){};
 
     public Node(String id, String con_id, Network net){
         this.ip = id;
@@ -51,8 +61,12 @@ public class Node extends NetworkComponent implements IpTable, Nodeble {
     public String toString(){
         return id;
     }
+    @JsonIgnore
     public String getName(){
         return "Node " +number;
+    }
+    public void setNet(Network net) {
+        this.net = net;
     }
 
 }

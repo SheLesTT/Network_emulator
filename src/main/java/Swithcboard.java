@@ -1,22 +1,27 @@
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import java.util.ArrayList;
 
-public class Swithcboard extends NetworkComponent implements IpTable {
+public class Swithcboard implements IpTable {
+
+
+    @JsonIgnore
     Network net;
+    @JsonProperty
     String ip = null;
+    @JsonProperty
     int number  ;
+    @JsonProperty
     String type  = "Switchboard";
+    @JsonProperty
     int linked_nodes_counter = 1;
+    @JsonProperty
     ArrayList<String> linked_nodes = new ArrayList<>();
 
-    @Override
-    public String getType() {
-        return type;
-    }
-    public void setType(String str){
-        type = str;
-    }
+public Swithcboard(){};
 
     public  Swithcboard(String ip, String con_id, Network net){
         this.ip =  ip;
@@ -59,6 +64,13 @@ public class Swithcboard extends NetworkComponent implements IpTable {
     }
 
     @Override
+    public String getType() {
+        return type;
+    }
+    public void setType(String str){
+        type = str;
+    }
+    @Override
     public void printNodesConnections() {
         for (String node_ip: linked_nodes){
             IpTable node= net.getNodeByID(node_ip);
@@ -66,8 +78,12 @@ public class Swithcboard extends NetworkComponent implements IpTable {
 
         }
     }
+    @JsonIgnore
     public String getName(){
         return "Switchboard " + number;
+    }
+    public void setNet(Network net) {
+        this.net = net;
     }
 
     @Override

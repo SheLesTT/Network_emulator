@@ -6,7 +6,7 @@ public class Main {
          */
         public static void main(String[] args) {
 
-            NetworkTree frame = new NetworkTree();
+            MainForm frame = new MainForm();
             frame.setVisible(true);
         /*Human human = new Human (0,80,16,1);
         Soldier mage = new Soldier(0,60,20,0);

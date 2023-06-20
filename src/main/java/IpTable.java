@@ -9,6 +9,7 @@ public interface IpTable {
      public String getIp();
      public String getType();
      public String getName();
+     public void setNet(Network net);
 //     public int getNumber();
      public void addConnection(String ip);
      public MutableTreeNode addTreeNode(String ip);

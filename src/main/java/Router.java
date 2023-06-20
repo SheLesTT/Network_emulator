@@ -4,7 +4,7 @@ import javax.swing.tree.MutableTreeNode;
 import java.util.ArrayList;
 import static java.lang.Math.pow;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-public class Router extends  NetworkComponent implements Serializable{
+public class Router implements Serializable{
 
 
     @JsonIgnore

@@ -1,21 +1,34 @@
 import javax.swing.tree.MutableTreeNode;
 import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RouterPort implements IpTable {
+    @JsonProperty
     private String ip;
-
+@JsonProperty
     private int ip_counter=2 ;  // two because first ip is unavailable and second is port's ip
     @JsonProperty
     private String type = "RouterPort";
+    @JsonProperty
     private String max_subnet_ip;
+    @JsonProperty
     private String min_subnet_ip;
+    @JsonIgnore
     Network net;
+
+    public void setNet(Network net) {
+        this.net = net;
+    }
+
+    @JsonProperty
     ArrayList<String> ids_used = new ArrayList<>();
     @JsonProperty
     Router router;
 //    @JsonProperty
 //    Router routerLink;
+    @JsonProperty
     ArrayList<String>  linked_nodes = new ArrayList<>();
 
     public RouterPort(){}
@@ -170,7 +183,7 @@ public class RouterPort implements IpTable {
     public ArrayList<String> getLinkedNodes() {
         return linked_nodes;
     }
-
+@JsonIgnore
     @Override
     public String getName() {
         return "Port of Router " + router.getNumber() ;
