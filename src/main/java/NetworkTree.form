@@ -27,12 +27,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component ip="jPanel1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component ip="jPanel1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -46,43 +46,42 @@
                   <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="create_nerwork" min="-2" max="-2" attributes="0"/>
+                          <Component ip="create_nerwork" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="219" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="read_data" min="-2" max="-2" attributes="0"/>
-                              <Component id="save_data" min="-2" max="-2" attributes="0"/>
+                              <Component ip="read_data" min="-2" max="-2" attributes="0"/>
+                              <Component ip="save_data" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="enter_amount_routers_label" min="-2" pref="290" max="-2" attributes="0"/>
+                              <Component ip="enter_amount_routers_label" min="-2" pref="290" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Component id="enter_routers_amount_field" min="-2" pref="71" max="-2" attributes="0"/>
+                                          <Component ip="enter_routers_amount_field" min="-2" pref="71" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-                                          <Component id="set_mask_24" min="-2" pref="90" max="-2" attributes="0"/>
+                                          <Component ip="set_mask_24" min="-2" pref="90" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="set_mask_26" alignment="1" min="-2" pref="98" max="-2" attributes="0"/>
-                                      <Component id="set_mask_27" alignment="1" min="-2" pref="98" max="-2" attributes="0"/>
-                                      <Component id="set_mask_28" alignment="1" min="-2" pref="98" max="-2" attributes="0"/>
+                                      <Component ip="set_mask_26" alignment="1" min="-2" pref="98" max="-2" attributes="0"/>
+                                      <Component ip="set_mask_27" alignment="1" min="-2" pref="98" max="-2" attributes="0"/>
+                                      <Component ip="set_mask_28" alignment="1" min="-2" pref="98" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="select_mask_option" min="-2" max="-2" attributes="0"/>
+                                  <Component ip="select_mask_option" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
-                  <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+                  <Component ip="jScrollPane1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" min="-2" pref="132" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <Component ip="jScrollPane2" pref="216" max="32767" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="0" pref="287" max="32767" attributes="0"/>
-                      <Component id="set_mask_25" min="-2" max="-2" attributes="0"/>
+                      <Component ip="set_mask_25" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="287" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -94,20 +93,20 @@
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="enter_amount_routers_label" min="-2" max="-2" attributes="0"/>
+                          <Component ip="enter_amount_routers_label" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="enter_routers_amount_field" min="-2" max="-2" attributes="0"/>
+                                  <Component ip="enter_routers_amount_field" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                  <Component id="set_mask_24" min="-2" max="-2" attributes="0"/>
+                                  <Component ip="set_mask_24" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+                          <Component ip="jScrollPane1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -115,37 +114,37 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="create_nerwork" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="set_mask_26" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component ip="create_nerwork" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component ip="set_mask_26" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="select_mask_option" min="-2" max="-2" attributes="0"/>
+                          <Component ip="select_mask_option" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="set_mask_27" min="-2" max="-2" attributes="0"/>
+                          <Component ip="set_mask_27" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="set_mask_28" min="-2" max="-2" attributes="0"/>
+                          <Component ip="set_mask_28" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="save_data" min="-2" max="-2" attributes="0"/>
+                      <Component ip="save_data" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="read_data" min="-2" max="-2" attributes="0"/>
+                  <Component ip="read_data" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="55" max="32767" attributes="0"/>
-                  <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
+                  <Component ip="jScrollPane2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="set_mask_25" min="-2" max="-2" attributes="0"/>
+                      <Component ip="set_mask_25" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>

@@ -5,12 +5,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
-public class IdTableDeserializer extends JsonDeserializer<IdTable> {
+public class IdTableDeserializer extends JsonDeserializer<IpTable> {
     @Override
-    public IdTable deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+    public IpTable deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
 //        System.out.println(node);
         // Extract the necessary fields from the JSON node
@@ -20,7 +18,7 @@ public class IdTableDeserializer extends JsonDeserializer<IdTable> {
         System.out.println(node);
 
         // Create the appropriate implementation instance based on the implementationType
-        IdTable idTable;
+        IpTable idTable;
 
         System.out.println(implementationType.equals("RouterPort") );
         if ("RouterPort".equals(implementationType)) {

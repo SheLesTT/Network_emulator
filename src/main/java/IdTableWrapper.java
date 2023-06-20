@@ -1,11 +1,11 @@
 public class IdTableWrapper {
     private String implementationType;
-    private IdTable data;
+    private IpTable data;
 
     public IdTableWrapper() {
     }
 
-    public IdTableWrapper(String implementationType, IdTable data) {
+    public IdTableWrapper(String implementationType, IpTable data) {
         this.implementationType = implementationType;
         this.data = data;
     }
@@ -18,11 +18,11 @@ public class IdTableWrapper {
         this.implementationType = implementationType;
     }
 
-    public IdTable getData() {
+    public IpTable getData() {
         return data;
     }
 
-    public void setData(IdTable data) {
+    public void setData(IpTable data) {
         this.data = data;
     }
 }

@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -11,7 +10,6 @@ import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  *
@@ -19,10 +17,12 @@ import java.util.HashMap;
  */
 public class NetworkTree extends javax.swing.JFrame {
 
-    IdGenerator gen = IdGenerator.genGenrator();
+    IpGenerator gen = IpGenerator.genGenrator();
     Network net = new Network();
     Creator creator = new Creator(net, gen);
-    Router router =creator.createRouter(28);
+    Router router =creator.createRouter(25);
+    Router rout1 = creator.createRouter(26);
+    Router rout2 =creator.createRouter(24);
 
     /**
      * Creates new form NetworkTree
@@ -31,10 +31,20 @@ public class NetworkTree extends javax.swing.JFrame {
         initComponents();
 
         router.addPorts(creator);
-        router.Print();
+//        RouterPort port = (RouterPort) net.all_nodes.get(router.ports.get(0));
+//        System.out.println(port.giveIp());
+//        System.out.println("given ip "+ port.giveIp());
+//        System.out.println(port.giveIp());
+//        router.Print();
+        rout1.addPorts(creator);
+//        rout1.Print();
+        rout2.addPorts(creator);
+//        System.out.println(" size of ports " + rout2.ports.size());
+//        rout2.Print();
         net.addRouter(router);
+        net.addRouter(rout1);
+        net.addRouter(rout2);
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -162,8 +172,7 @@ public class NetworkTree extends javax.swing.JFrame {
                                 .addComponent(select_mask_option)))))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(0, 287, Short.MAX_VALUE)
@@ -255,8 +264,11 @@ public class NetworkTree extends javax.swing.JFrame {
         net.prepareForWriting();
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        // delete in a final version
         String data = mapper.writeValueAsString(net);
         System.out.println(data);
+
         mapper.writeValue(new File("output.json"), net);
 
         }
@@ -269,7 +281,7 @@ public class NetworkTree extends javax.swing.JFrame {
         rout.setNet(network);
 //        network.printModifiedMap();
         network.finishReading();
-        System.out.println(network.all_nodes.get("192.168.0.1").getId());
+        System.out.println(network.all_nodes.get("192.168.0.0").getIp());
 //        rout.Print();
 
     }//GEN-LAST:event_read_dataActionPerformed

@@ -1,7 +1,6 @@
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,15 +11,45 @@ public class Network {
     @JsonIgnore
     int num_switchboards =0;
     @JsonIgnore
-    HashMap<String, IdTable> all_nodes = new HashMap<>();
+    HashMap<String, IpTable> all_nodes = new HashMap<>();
     @JsonProperty
     HashMap<String, RouterPort> rout = new HashMap<>();
-    @JsonIgnore
-    HashMap<String, IdTableWrapper> modif_all_nodes = new HashMap<>();
+//    @JsonIgnore
+//    HashMap<String, IdTableWrapper> modif_all_nodes = new HashMap<>();
 
 
     public Network() {
         // Default constructor
+    }
+    public void connectNetwork(){
+        for(int i=0; i< routers.size()-1;i ++){
+            Router rout1 = routers.get(i);
+            Router rout2 = routers.get(i+1);
+            connectRouters(rout1, rout2);
+            connectRouters(rout2, rout1);
+        }
+        if(routers.size()>2) {
+            Router last = routers.get(routers.size() - 1);
+            Router first = routers.get(0);
+            connectRouters(first, last);
+            connectRouters(last, first);
+        }
+    }
+
+    public void connectRouters(Router rout1, Router rout2){
+
+        for(String port_ip: rout1.ports){
+            RouterPort port = (RouterPort) all_nodes.get(port_ip);
+            for (String port_to_add: rout2.ports){
+                port.addConnection(port_to_add);
+            }
+        }
+    }
+    public  void putNode(String ip, IpTable node){
+        all_nodes.put(ip, node);
+    }
+    public IpTable getNodeByID(String key){
+        return all_nodes.get(key);
     }
 
     public void prepareForWriting(){

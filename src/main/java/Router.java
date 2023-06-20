@@ -26,18 +26,34 @@ public class Router extends  NetworkComponent implements Serializable{
         // Default constructor
     }
 
-    public void addPorts(Creator creator){
+    public void addPorts(Creator creator ){
         for(int i =0; i< subnetwok_count;i++){
-            RouterPort port = creator.createPort(subnetwork_size+1);
-            ports.add(port.getId());
+
+            RouterPort port = creator.createPort(this,subnetwork_size);
+            ports.add(port.getIp());
+            port.attachSubNet(creator);
         }
+        for(String port_ip: ports){
+            IpTable port = net.getNodeByID(port_ip);
+            for(String node_ip: ports){
+                if (node_ip != port_ip){
+                    port.addConnection(node_ip);
+                }
+            }
+        }
+    }
+
+    public void addLinkedNodesToPorts(){
+
     }
 
     public MutableTreeNode addTreeNode(){
         DefaultMutableTreeNode router_node = new DefaultMutableTreeNode("router " + number );
         for(String port: ports){
             RouterPort port_rout = (RouterPort) net.all_nodes.get(port);
-            router_node.add(port_rout.addTreeNode());
+//            System.out.println(port_rout);
+            router_node.add(port_rout.addTreeNode(""));
+
         }
         return router_node;
     }

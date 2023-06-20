@@ -1,8 +1,8 @@
 public class Creator {
     Network net = null;
-    IdGenerator generator = null;
+    IpGenerator generator = null;
 
-    public Creator(Network net, IdGenerator generator){
+    public Creator(Network net, IpGenerator generator){
         this.net =  net;
         this.generator = generator;
     }
@@ -12,22 +12,29 @@ public class Creator {
         net.addRouter();
         return new Router(MaskLength,net.getNum_routers(),net);
     }
-    public Swithcboard createSwitchboard(){
+    public Swithcboard createSwitchboard(String ip, String con_id){
         net.addSwitchboard();
-        return new Swithcboard();
+        Swithcboard swithcboard = new Swithcboard(ip, con_id, net);
+//        System.out.println("Put switchboard with ip " + ip );
+        net.putNode(swithcboard.getIp(),swithcboard);
+        return swithcboard;
     }
 
-    public Node createNode(){
+    public Node createNode(String ip, String con_id){
         net.addNode();
-        return  new Node();
+        Node node =  new Node(ip, con_id, net);
+        net.putNode(node.getIp(), node);
+        return node;
+
     }
 
-    public RouterPort createPort(int subnetwork_size) {
+    public RouterPort createPort( Router router , int subnetwork_size) {
 
-        RouterPort port = new RouterPort(generator.generateMinSubnetId(),
+        RouterPort port = new RouterPort(net,generator.generateFirstAvailableId(),
                 generator.generateMaxSubnetId(subnetwork_size),
-                generator.generateMinSubnetId());
-        net.all_nodes.put(generator.generateMinSubnetId(), port);
+                generator.generateMinSubnetId(), router);
+//       System.out.println("Put port with " + generator.generateFirstAvailableId());
+        net.putNode(generator.generateFirstAvailableId(), port);
         generator.updateBits(subnetwork_size);
 
         return port;
