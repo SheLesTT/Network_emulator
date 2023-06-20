@@ -537,8 +537,17 @@ public class MainForm extends javax.swing.JFrame {
 
     private void load_network_buttonActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_load_network_buttonActionPerformed
 
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("."));
+        int response = fileChooser.showOpenDialog(null);
+
+        String file = null;
+        if(response == JFileChooser.APPROVE_OPTION){
+            file = fileChooser.getSelectedFile().getAbsolutePath();
+            System.out.println(file);
+        }
         ObjectMapper mapper = new ObjectMapper();
-        net = mapper.readValue(new File("output.json"), Network.class);
+        net = mapper.readValue(new File(file), Network.class);
 
         net.finishReading();
         net.setNetToNodes();
