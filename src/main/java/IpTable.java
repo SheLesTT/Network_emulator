@@ -8,6 +8,7 @@ public interface IpTable {
      String type = null;
      public String getIp();
      public String getType();
+     public String getName();
 //     public int getNumber();
      public void addConnection(String ip);
      public MutableTreeNode addTreeNode(String ip);

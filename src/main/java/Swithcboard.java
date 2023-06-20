@@ -66,6 +66,9 @@ public class Swithcboard extends NetworkComponent implements IpTable {
 
         }
     }
+    public String getName(){
+        return "Switchboard " + number;
+    }
 
     @Override
     public ArrayList<String> getLinkedNodes() {

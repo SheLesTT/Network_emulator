@@ -1,5 +1,6 @@
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
+import java.security.PublicKey;
 import java.util.ArrayList;
 
 public class Node extends NetworkComponent implements IpTable, Nodeble {
@@ -49,6 +50,9 @@ public class Node extends NetworkComponent implements IpTable, Nodeble {
     @Override
     public String toString(){
         return id;
+    }
+    public String getName(){
+        return "Node " +number;
     }
 
 }

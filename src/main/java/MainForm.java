@@ -6,6 +6,9 @@
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
@@ -399,7 +402,7 @@ public class MainForm extends javax.swing.JFrame {
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus){
             if(value instanceof Nodeble){
-                value = ((Nodeble) value).getIp();
+                value = ((Nodeble) value).getName();
 
             }
             return super.getListCellRendererComponent(list,value, index, isSelected,cellHasFocus);
@@ -453,14 +456,32 @@ public class MainForm extends javax.swing.JFrame {
         show_network_frame.dispose();
         DefaultComboBoxModel<Nodeble> startComboBoxModel = new DefaultComboBoxModel<>();
         DefaultComboBoxModel<Nodeble> endComboBoxModel = new DefaultComboBoxModel<>();
+
+        ArrayList<Nodeble> node_list = new ArrayList<>();
         for (String key: net.all_nodes.keySet()){
             IpTable node = net.getNodeByID(key);
             if(node instanceof Nodeble){
+                node_list.add((Nodeble) node);
 //                select_starting_node_comboBox.addItem();
-                startComboBoxModel.addElement((Nodeble) node);
-                endComboBoxModel.addElement((Nodeble) node);
+//                startComboBoxModel.addElement((Nodeble) node);
+//                endComboBoxModel.addElement((Nodeble) node);
             }
-        }select_starting_node_comboBox.setModel(startComboBoxModel);
+
+        }
+
+        node_list.sort(new Comparator<Nodeble>() {
+            @Override
+            public int compare(Nodeble node1, Nodeble node2) {
+                return node1.getName().compareTo(node2.getName());
+            }
+        });
+
+        for(Nodeble nodeble: node_list){
+            System.out.println(nodeble.getName());
+            startComboBoxModel.addElement((Nodeble) nodeble);
+            endComboBoxModel.addElement((Nodeble) nodeble);
+        }
+        select_starting_node_comboBox.setModel(startComboBoxModel);
         select_starting_node_comboBox.setRenderer(new NodebleListCellRender());
         select_final_node_comboBox.setRenderer(new NodebleListCellRender());
         select_final_node_comboBox.setModel(endComboBoxModel);

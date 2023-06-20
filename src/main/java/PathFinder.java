@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class PathFinder {
     Network net;
@@ -53,9 +50,18 @@ public class PathFinder {
 
            path.add(at);
        }
+        Collections.reverse(path);
+       path.remove(path.size()-1);
+       String str_path = "";
        for(String node_id: path){
            IpTable  node = net.getNodeByID(node_id);
-           System.out.println("Node "+node.getType()+" With ip " +node.getIp());
+           if(path.indexOf(node_id) != path.size()-1) {
+               str_path += node.getName() + " with ip " + node.getIp() + "->\n";
+           }else {
+               str_path += node.getName() + " with ip " + node.getIp() + "\n";
+           }
+           System.out.println(str_path);
+//           System.out.println("Node "+node.getType()+" With ip " +node.getIp());
        }
 
     }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RouterPort implements IpTable {
     private String ip;
+
     private int ip_counter=2 ;  // two because first ip is unavailable and second is port's ip
     @JsonProperty
     private String type = "RouterPort";
@@ -170,5 +171,9 @@ public class RouterPort implements IpTable {
         return linked_nodes;
     }
 
+    @Override
+    public String getName() {
+        return "Port of Router " + router.getNumber() ;
+    }
 }
 
