@@ -2,7 +2,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import java.util.ArrayList;
 
-public class Node extends NetworkComponent implements IpTable {
+public class Node extends NetworkComponent implements IpTable, Nodeble {
     Network net;
     private String ip;
     private String type = "Node";
@@ -44,6 +44,11 @@ public class Node extends NetworkComponent implements IpTable {
     }
     public ArrayList<String> getLinkedNodes() {
         return linked_nodes;
+    }
+
+    @Override
+    public String toString(){
+        return id;
     }
 
 }
