@@ -7,13 +7,13 @@ public class PathFinder {
         this.net = net;
     }
 
-    public void BFS(String starting_node, String node_to_serach){
+    public String BFS(String starting_node, String node_to_serach){
 
         HashMap<String ,String> prev = Solve(starting_node);
         for (String key: prev.keySet()){
 //            System.out.println("Previous for node "+ key + " is " + prev.get(key));
         }
-        reconstructPath(node_to_serach,prev);
+        return reconstructPath(node_to_serach,prev);
 
     }
 
@@ -42,7 +42,7 @@ public class PathFinder {
         }
        return prev;
     }
-    public void reconstructPath( String node_to_serach, HashMap<String,String> prev){
+    public String reconstructPath( String node_to_serach, HashMap<String,String> prev){
        ArrayList<String> path = new ArrayList<>();
        path.add(node_to_serach);
        for(String at = node_to_serach; at !=null; at=prev.get(at)){
@@ -60,9 +60,10 @@ public class PathFinder {
            }else {
                str_path += node.getName() + " with ip " + node.getIp() + "\n";
            }
-           System.out.println(str_path);
+//           System.out.println(str_path);
 //           System.out.println("Node "+node.getType()+" With ip " +node.getIp());
        }
+       return str_path;
 
     }
 

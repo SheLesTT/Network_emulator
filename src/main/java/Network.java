@@ -13,7 +13,13 @@ public class Network {
     @JsonIgnore
     HashMap<String, IpTable> all_nodes = new HashMap<>();
     @JsonProperty
-    HashMap<String, RouterPort> rout = new HashMap<>();
+    HashMap<String, RouterPort> rout_port = new HashMap<>();
+    @JsonProperty
+    HashMap<String, Swithcboard> switchboard = new HashMap<>();
+
+    @JsonProperty
+    HashMap<String,Node > node_map = new HashMap<>();
+
 //    @JsonIgnore
 //    HashMap<String, IdTableWrapper> modif_all_nodes = new HashMap<>();
 
@@ -45,6 +51,14 @@ public class Network {
             }
         }
     }
+    public void setNetToNodes(){
+        for(Router router: routers){
+            router.setNet(this);
+        }
+        for (IpTable node: all_nodes.values()){
+            node.setNet(this);
+        }
+    }
     public  void putNode(String ip, IpTable node){
         all_nodes.put(ip, node);
     }
@@ -53,17 +67,39 @@ public class Network {
     }
 
     public void prepareForWriting(){
-        for (String key: all_nodes.keySet()){
-            RouterPort port = (RouterPort) all_nodes.get(key);
-            rout.put(key, (RouterPort) port);
+        for (String node_id: all_nodes.keySet()){
+            IpTable node_stored = all_nodes.get(node_id);
+            String type = node_stored.getType();
+            switch (type){
+                case "Switchboard":
+                    switchboard.put(node_id,(Swithcboard) node_stored);
+                    break;
+                case "Node":
+                    node_map.put(node_id, (Node) node_stored);
+                    break;
+                case "RouterPort":
+                    rout_port.put(node_id, (RouterPort) node_stored);
+                    break;
+            }
+
         }
     }
 
     public void finishReading(){
 
-       for (String key: rout.keySet()){
-            RouterPort port =  rout.get(key);
+       for (String key: rout_port.keySet()){
+            RouterPort port =  rout_port.get(key);
             all_nodes.put(key,  port);
+        }
+
+        for (String key: switchboard.keySet()){
+            Swithcboard swithcboard =  switchboard.get(key);
+            all_nodes.put(key,  swithcboard);
+        }
+
+        for (String key: node_map.keySet()){
+            Node node =  node_map.get(key);
+            all_nodes.put(key,  node);
         }
     }
 
