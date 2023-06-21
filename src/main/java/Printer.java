@@ -19,14 +19,27 @@ public class Printer implements IpTable, Nodeble{
     int number;
     @JsonProperty
     ArrayList<String> linked_nodes = new ArrayList<>();
+    @JsonProperty
+    String subnetwork ;
 
     public Printer(){};
 
-    public Printer(String id, String con_id, Network net){
+    public Printer(String id, String con_id, Network net, String subnetwork){
         this.ip = id;
         linked_nodes.add(con_id);
         this.net = net;
         this.number = net.getNum_nodes();
+        this.subnetwork =subnetwork;
+    }
+
+    public Boolean changeIp(String id_to_replace){
+        boolean result = false;
+        RouterPort port = (RouterPort) net.getNodeByID(subnetwork);
+        if(port.isIpAvailable(id_to_replace)){
+            ip = id_to_replace;
+            result = true;
+        }
+        return  result;
     }
 
     public MutableTreeNode addTreeNode(String ip){
@@ -71,4 +84,9 @@ public class Printer implements IpTable, Nodeble{
         this.net = net;
     }
     public void setSleep(Boolean is_sleeping){sleep = is_sleeping;}
+
+    @Override
+    public Boolean getSleep() {
+        return sleep;
+    }
 }

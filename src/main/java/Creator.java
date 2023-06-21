@@ -12,25 +12,26 @@ public class Creator {
         net.addRouter();
         return new Router(MaskLength,net.getNum_routers(),net);
     }
-    public Swithcboard createSwitchboard(String ip, String con_id){
+    public Swithcboard createSwitchboard(String ip, String con_id,String subnetwork){
         net.addSwitchboard();
-        Swithcboard swithcboard = new Swithcboard(ip, con_id, net);
+        Swithcboard swithcboard = new Swithcboard(ip, con_id, net,subnetwork);
 //        System.out.println("Put switchboard with ip " + ip );
         net.putNode(swithcboard.getIp(),swithcboard);
         return swithcboard;
     }
 
-    public Node createNode(String ip, String con_id){
+    public Node createNode(String ip, String con_id, String subnetwork){
         net.addNode();
-        Node node =  new Node(ip, con_id, net);
+        System.out.println("Subnetwork of a node"+ subnetwork);
+        Node node =  new Node(ip, con_id, net,subnetwork );
         net.putNode(node.getIp(), node);
         return node;
 
     }
 
-    public Printer createPrinter(String ip, String con_id){
+    public Printer createPrinter(String ip, String con_id, String subnetwork){
         net.addNode();
-        Printer printer =  new Printer(ip, con_id, net);
+        Printer printer =  new Printer(ip, con_id, net, subnetwork);
         net.putNode(printer.getIp(), printer);
         return printer;
 

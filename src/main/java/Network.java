@@ -1,6 +1,7 @@
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,6 +29,19 @@ public class Network {
 
     public Network() {
         // Default constructor
+    }
+
+    public void setSleep(){
+        for(IpTable node: all_nodes.values()){
+            if (node instanceof Nodeble){
+                ((Nodeble) node).setSleep(false);
+                Random random = new Random();
+                double randomNumber = random.nextDouble();
+                if(randomNumber < 0.3){
+                    ((Nodeble) node).setSleep(true);
+                }
+            }
+        }
     }
     public void connectNetwork(){
         for(int i=0; i< routers.size()-1;i ++){

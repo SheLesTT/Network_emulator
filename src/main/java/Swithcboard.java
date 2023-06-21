@@ -10,8 +10,7 @@ public class Swithcboard implements IpTable {
 
     @JsonIgnore
     Network net;
-    @JsonProperty
-    Boolean sleep = false;
+
     @JsonProperty
     String ip = null;
     @JsonProperty
@@ -22,17 +21,28 @@ public class Swithcboard implements IpTable {
     int linked_nodes_counter = 1;
     @JsonProperty
     ArrayList<String> linked_nodes = new ArrayList<>();
+    @JsonProperty
+    String subnetwork;
 
 public Swithcboard(){};
 
-    public  Swithcboard(String ip, String con_id, Network net){
+    public  Swithcboard(String ip, String con_id, Network net, String subnetwork){
         this.ip =  ip;
         this.net = net;
         this.number = net.num_switchboards;
-
+        this.subnetwork =subnetwork;
         linked_nodes.add(con_id);
     }
 
+    public Boolean changeIp(String id_to_replace){
+        boolean result = false;
+        RouterPort port = (RouterPort) net.getNodeByID(subnetwork);
+        if(port.isIpAvailable(id_to_replace)){
+            ip = id_to_replace;
+            result = true;
+        }
+        return  result;
+    }
     public MutableTreeNode addTreeNode(String backlink_connection){
         DefaultMutableTreeNode switch_board_node = new DefaultMutableTreeNode("switchboard " + number);
         DefaultMutableTreeNode char_node  = new DefaultMutableTreeNode("Network characteristics");
@@ -87,7 +97,7 @@ public Swithcboard(){};
     public void setNet(Network net) {
         this.net = net;
     }
-    public void setSleep(Boolean is_sleeping){sleep = is_sleeping;}
+
 
     @Override
     public ArrayList<String> getLinkedNodes() {

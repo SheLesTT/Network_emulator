@@ -75,6 +75,10 @@ public class MainForm extends javax.swing.JFrame {
         show_network_tree = new javax.swing.JTree();
         open_find_pass_panel_but = new javax.swing.JButton();
         save_network_button = new javax.swing.JButton();
+        add_sleep_button = new javax.swing.JButton();
+        ip_to_be_replaced_field = new javax.swing.JTextField();
+        ip_ro_replace_field = new javax.swing.JTextField();
+        change_ip_button = new javax.swing.JToggleButton();
         find_path_frame = new javax.swing.JFrame();
         jPanel2 = new javax.swing.JPanel();
         select_starting_node_comboBox = new JComboBox<Nodeble>();
@@ -120,16 +124,46 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
+        add_sleep_button.setText("обновить статус");
+        add_sleep_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_sleep_buttonActionPerformed(evt);
+            }
+        });
+
+        change_ip_button.setText("change_ip_hello");
+        change_ip_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                change_ip_buttonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(open_find_pass_panel_but)
-                    .addComponent(save_network_button))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(136, Short.MAX_VALUE)
+                        .addComponent(add_sleep_button)
+                        .addGap(80, 80, 80))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(44, 44, 44)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(open_find_pass_panel_but)
+                                    .addComponent(save_network_button)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(ip_to_be_replaced_field, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(69, 69, 69)
+                                .addComponent(ip_ro_replace_field, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(81, 81, 81)
+                                .addComponent(change_ip_button, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -141,9 +175,17 @@ public class MainForm extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(152, 152, 152)
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ip_to_be_replaced_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ip_ro_replace_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31)
+                        .addComponent(change_ip_button, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(open_find_pass_panel_but)
-                        .addGap(81, 81, 81)
+                        .addGap(10, 10, 10)
+                        .addComponent(add_sleep_button)
+                        .addGap(48, 48, 48)
                         .addComponent(save_network_button)))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
@@ -355,9 +397,9 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(99, 99, 99)
                 .addComponent(radio_but_mask_length_24)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(radio_but_mask_length_25))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(radio_but_mask_length_25)
+                    .addComponent(jLabel1))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
@@ -391,6 +433,7 @@ public class MainForm extends javax.swing.JFrame {
         public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
             super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
            String str_leaf = (String) ((DefaultMutableTreeNode)value).getUserObject();
+
             if(str_leaf.startsWith("p")){
 
                     setForeground(Color.GRAY);
@@ -413,7 +456,7 @@ public class MainForm extends javax.swing.JFrame {
         show_network_tree.setModel(new DefaultTreeModel(net.addInfoToGui()));
 
        show_network_frame.setVisible(true);
-        show_network_frame.setSize(500, 500);
+        show_network_frame.setSize(700, 700);
 
     }//GEN-LAST:event_create_networkActionPerformed
 
@@ -526,7 +569,7 @@ public class MainForm extends javax.swing.JFrame {
     private void back_to_tree_view_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_to_tree_view_buttonActionPerformed
         find_path_frame.dispose();
         show_network_frame.setVisible(true);
-        show_network_frame.setSize(500, 500);
+        show_network_frame.setSize(700, 700);
     }//GEN-LAST:event_back_to_tree_view_buttonActionPerformed
 
     private void find_path_buttomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_find_path_buttomActionPerformed
@@ -535,11 +578,17 @@ public class MainForm extends javax.swing.JFrame {
        IpTable end_node = (IpTable)select_final_node_comboBox.getSelectedItem();
        System.out.println(end_node.getIp());
 
-        PathFinder finder = new PathFinder(net);
-        String startingNode = start_node.getIp();
-        String nodeToFind = end_node.getIp();
-        String path_str = finder.BFS(startingNode, nodeToFind);
-        Path_text_area.setText(path_str);
+       if(((Nodeble)end_node).getSleep()){
+           JOptionPane.showMessageDialog(this, "Узел не доступен",
+                   "Node is not available", JOptionPane.INFORMATION_MESSAGE);
+       }else {
+
+           PathFinder finder = new PathFinder(net);
+           String startingNode = start_node.getIp();
+           String nodeToFind = end_node.getIp();
+           String path_str = finder.BFS(startingNode, nodeToFind);
+           Path_text_area.setText(path_str);
+       }
 //       System.out.println(select_final_node_comboBox.getSelectedItem());
     }//GEN-LAST:event_find_path_buttomActionPerformed
 
@@ -575,6 +624,34 @@ public class MainForm extends javax.swing.JFrame {
         net.setNetToNodes();
 //        System.out.println(network.all_nodes.get("192.168.0.0").getIp());
     }//GEN-LAST:event_load_network_buttonActionPerformed
+
+    private void add_sleep_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_sleep_buttonActionPerformed
+       net.setSleep();
+    }//GEN-LAST:event_add_sleep_buttonActionPerformed
+
+    private void change_ip_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_change_ip_buttonActionPerformed
+       String ip_to__be_replaced = ip_to_be_replaced_field.getText();
+        String ip_to_replace = ip_ro_replace_field.getText();
+       IpTransormator transormator = new IpTransormator();
+       if((!transormator.isIpValid(ip_to_replace))&(!transormator.isIpValid(ip_to__be_replaced))){
+
+           JOptionPane.showMessageDialog(this, "Не корректный ip",
+                   "Ip s not valid", JOptionPane.INFORMATION_MESSAGE);
+       }else{
+           IpTable node = net.getNodeByID(ip_to__be_replaced);
+           if(!node.changeIp(ip_to_replace)){
+
+               JOptionPane.showMessageDialog(this, "Невозможно сменить ip на данный",
+                       "Ip s not available", JOptionPane.ERROR_MESSAGE);
+           }else{
+               JOptionPane.showMessageDialog(this, "Ip изменен",
+                       "Ip is changed ", JOptionPane.INFORMATION_MESSAGE);
+
+               show_network_tree.setModel(new DefaultTreeModel(net.addInfoToGui()));
+           }
+        }
+
+    }//GEN-LAST:event_change_ip_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -614,11 +691,15 @@ public class MainForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Path_text_area;
     private javax.swing.JLabel Select_starting_node_label;
+    private javax.swing.JButton add_sleep_button;
     private javax.swing.JButton back_to_tree_view_button;
+    private javax.swing.JToggleButton change_ip_button;
     private javax.swing.JButton create_network;
     private javax.swing.JButton create_router_with_chousen_mask;
     private javax.swing.JButton find_path_buttom;
     private javax.swing.JFrame find_path_frame;
+    private javax.swing.JTextField ip_ro_replace_field;
+    private javax.swing.JTextField ip_to_be_replaced_field;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

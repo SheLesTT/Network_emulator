@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class RouterPort implements IpTable {
     @JsonProperty
     private String ip;
+    private IpTransormator ipTransormator = new IpTransormator();
 @JsonProperty
     private int ip_counter=2 ;  // two because first ip is unavailable and second is port's ip
     @JsonProperty
@@ -23,7 +24,7 @@ public class RouterPort implements IpTable {
     }
 
     @JsonProperty
-    ArrayList<String> ids_used = new ArrayList<>();
+    ArrayList<String> ips_used = new ArrayList<>();
     @JsonProperty
     Router router;
 //    @JsonProperty
@@ -84,7 +85,7 @@ public class RouterPort implements IpTable {
             attachSwitchboard(creator, num_total_nodes,num_printers,this);
         }else{
             String  ip_switch = giveIp();
-            Swithcboard connecting_switch = creator.createSwitchboard(ip_switch, ip); // Switchboard to connect another switches
+            Swithcboard connecting_switch = creator.createSwitchboard(ip_switch, ip, ip); // Switchboard to connect another switches
 
             linked_nodes.add(connecting_switch.getIp());
             int count_switch = num_total_nodes / 29 +1;
@@ -98,23 +99,47 @@ public class RouterPort implements IpTable {
         }
 
     }
+    public Boolean changeIp(String ip_to_replace){
+        boolean result = false;
+        if(isIpAvailable(ip_to_replace)){
+            ip = ip_to_replace;
+            result = true;
+        }
+        return result;
+
+    }
+    public Boolean isIpAvailable(String ip){
+
+        boolean result =true;
+        int int_ip = ipTransormator.stringToIntIP(ip);
+        int max_ip = ipTransormator.stringToIntIP(max_subnet_ip);
+        int min_ip = ipTransormator.stringToIntIP(min_subnet_ip);
+        if(ips_used.contains(ip)){
+            result = false;
+        }
+        if (int_ip>max_ip | int_ip<min_ip){
+            result = false;
+        }
+        return result;
+    }
+
 
     public void attachSwitchboard(Creator creator, int num_nodes, int num_printers, IpTable node_to_connect){
 
-        Swithcboard swithcboard = creator.createSwitchboard(giveIp(), node_to_connect.getIp());
+        Swithcboard swithcboard = creator.createSwitchboard(giveIp(), node_to_connect.getIp(), ip);
         node_to_connect.addConnection(swithcboard.getIp());
         while (num_printers>0){
 
-            String ip =  giveIp();
-            swithcboard.linked_nodes.add(ip);
-            creator.createPrinter(ip,swithcboard.getIp());
+            String ip_given =  giveIp();
+            swithcboard.linked_nodes.add(ip_given);
+            creator.createPrinter(ip_given,swithcboard.getIp(),getIp());
             num_printers--;
             num_nodes--;
         }
         for(int i =0; i < num_nodes; i++){
-            String ip =  giveIp();
-            swithcboard.linked_nodes.add(ip);
-            creator.createNode(ip,swithcboard.getIp() );
+            String ip_given =  giveIp();
+            swithcboard.linked_nodes.add(ip_given);
+            creator.createNode(ip_given,swithcboard.getIp(), getIp() );
         }
 
     }
@@ -146,37 +171,16 @@ public class RouterPort implements IpTable {
 //            int len_con = node.li
         }
     }
-    public int stringToIntIP(String str_ip){
-        int fouth_bit;
-        int third_bit;
-        int lastIndex = str_ip.lastIndexOf('.');
-        String str_fouth_bit = str_ip.substring(lastIndex + 1);
-        fouth_bit = Integer.parseInt(str_fouth_bit);
 
-        int secondToLastIndex = str_ip.lastIndexOf('.', str_ip.lastIndexOf('.') - 1);
-        String str_third_bit = str_ip.substring(secondToLastIndex+1,lastIndex);
-        third_bit = Integer.parseInt(str_third_bit);
-        int int_id  = third_bit*256 +fouth_bit;
-        return int_id;
-
-    }
-
-    public String intToStringIp(int int_id ){
-        int fourth_bit;
-        int third_bit;
-        fourth_bit = int_id % 256;
-        third_bit = int_id / 256;
-        String str_id  = "192.168." + Integer.toString(third_bit) + "." + Integer.toString(fourth_bit);
-        return str_id;
-    }
     public String giveIp(){
-       int ip = stringToIntIP(min_subnet_ip)+ ip_counter;
+       int ip = ipTransormator.stringToIntIP(min_subnet_ip)+ ip_counter;
        String str_ip;
 //       System.out.println(ip);
 //       System.out.println(stringToIntIP(max_subnet_ip));
-       if (ip < stringToIntIP(max_subnet_ip)){
+       if (ip < ipTransormator.stringToIntIP(max_subnet_ip)){
            ip_counter+=1;
-           str_ip = intToStringIp(ip);
+           str_ip = ipTransormator.intToStringIp(ip);
+           ips_used.add(str_ip);
        }else {
            System.out.println("ip is out of bounds for his subnework");
            str_ip =null;
