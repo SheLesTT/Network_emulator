@@ -28,6 +28,15 @@ public class Creator {
 
     }
 
+    public Printer createPrinter(String ip, String con_id){
+        net.addNode();
+        Printer printer =  new Printer(ip, con_id, net);
+        net.putNode(printer.getIp(), printer);
+        return printer;
+
+    }
+
+
     public RouterPort createPort( Router router , int subnetwork_size) {
 
         RouterPort port = new RouterPort(net,generator.generateFirstAvailableId(),

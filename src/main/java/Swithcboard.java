@@ -11,6 +11,8 @@ public class Swithcboard implements IpTable {
     @JsonIgnore
     Network net;
     @JsonProperty
+    Boolean sleep = false;
+    @JsonProperty
     String ip = null;
     @JsonProperty
     int number  ;
@@ -85,6 +87,7 @@ public Swithcboard(){};
     public void setNet(Network net) {
         this.net = net;
     }
+    public void setSleep(Boolean is_sleeping){sleep = is_sleeping;}
 
     @Override
     public ArrayList<String> getLinkedNodes() {

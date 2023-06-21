@@ -73,32 +73,44 @@ public class RouterPort implements IpTable {
 
     public void attachSubNet(Creator creator){
 
-        int num_nodes = (int)Math.floor(Math.random() * (router.subnetwork_size -4 ) +1);
-        if (num_nodes < 30){
-            attachSwitchboard(creator, num_nodes,this);
+        int num_total_nodes = (int)Math.floor(Math.random() * (router.subnetwork_size -4 ) +1);
+        int num_printers = (int)Math.floor(Math.random()*3)+1;
+        if (num_printers >= num_total_nodes){
+            num_printers =1;
+        }
+//        int num_nodes = num_total_nodes - num_printers;
+
+        if (num_total_nodes < 30){
+            attachSwitchboard(creator, num_total_nodes,num_printers,this);
         }else{
-//            System.out.println("got here");
             String  ip_switch = giveIp();
-//            System.out.println(ip_switch);
             Swithcboard connecting_switch = creator.createSwitchboard(ip_switch, ip); // Switchboard to connect another switches
-//            connecting_switch.setType( "connecting ");
 
             linked_nodes.add(connecting_switch.getIp());
-            int count_switch = num_nodes / 29 +1;
+            int count_switch = num_total_nodes / 29 +1;
             for(int i = 0; i < count_switch; i++){
-                if (num_nodes>30) {
-                    attachSwitchboard(creator, 29, connecting_switch);
-                    num_nodes -= 29;
-                }else {attachSwitchboard(creator, num_nodes, connecting_switch); }
+                if (num_total_nodes>30) {
+                    attachSwitchboard(creator, 29,num_printers, connecting_switch);
+                    num_printers=0;
+                    num_total_nodes -= 29;
+                }else {attachSwitchboard(creator, num_total_nodes,num_printers, connecting_switch); }
             }
         }
 
     }
 
-    public void attachSwitchboard(Creator creator, int num_nodes, IpTable node_to_connect){
+    public void attachSwitchboard(Creator creator, int num_nodes, int num_printers, IpTable node_to_connect){
 
         Swithcboard swithcboard = creator.createSwitchboard(giveIp(), node_to_connect.getIp());
         node_to_connect.addConnection(swithcboard.getIp());
+        while (num_printers>0){
+
+            String ip =  giveIp();
+            swithcboard.linked_nodes.add(ip);
+            creator.createPrinter(ip,swithcboard.getIp());
+            num_printers--;
+            num_nodes--;
+        }
         for(int i =0; i < num_nodes; i++){
             String ip =  giveIp();
             swithcboard.linked_nodes.add(ip);

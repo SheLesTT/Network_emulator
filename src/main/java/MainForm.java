@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 import java.io.File;
@@ -384,10 +386,30 @@ public class MainForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private static class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
+        @Override
+        public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+            super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
+           String str_leaf = (String) ((DefaultMutableTreeNode)value).getUserObject();
+            if(str_leaf.startsWith("p")){
 
+                    setForeground(Color.GRAY);
+
+            }
+            // Customize color for specific node
+//            if (value.toString().equals("Node 1")) {
+//                component.setForeground(Color.RED);
+//            } else if (value.toString().equals("Node 2")) {
+//                component.setForeground(Color.BLUE);
+//            }
+
+            return this;
+        }
+    }
     private void create_networkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_networkActionPerformed
 //       network_tree.setModel(new DefaultTreeModel( net.addInfoToGui()));
        net.connectNetwork();
+       show_network_tree.setCellRenderer(new CustomTreeCellRenderer());
         show_network_tree.setModel(new DefaultTreeModel(net.addInfoToGui()));
 
        show_network_frame.setVisible(true);

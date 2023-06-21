@@ -19,6 +19,8 @@ public class Network {
 
     @JsonProperty
     HashMap<String,Node > node_map = new HashMap<>();
+    @JsonProperty
+    HashMap<String,Printer> prnter_map = new HashMap<>();
 
 //    @JsonIgnore
 //    HashMap<String, IdTableWrapper> modif_all_nodes = new HashMap<>();
@@ -80,6 +82,8 @@ public class Network {
                 case "RouterPort":
                     rout_port.put(node_id, (RouterPort) node_stored);
                     break;
+                case "Printer":
+                    prnter_map.put(node_id,(Printer) node_stored);
             }
 
         }
@@ -99,6 +103,11 @@ public class Network {
 
         for (String key: node_map.keySet()){
             Node node =  node_map.get(key);
+            all_nodes.put(key,  node);
+        }
+
+        for (String key: prnter_map.keySet()){
+            Printer node =  prnter_map.get(key);
             all_nodes.put(key,  node);
         }
     }
