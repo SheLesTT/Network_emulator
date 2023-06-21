@@ -22,7 +22,7 @@ public class Creator {
 
     public Node createNode(String ip, String con_id, String subnetwork){
         net.addNode();
-        System.out.println("Subnetwork of a node"+ subnetwork);
+
         Node node =  new Node(ip, con_id, net,subnetwork );
         net.putNode(node.getIp(), node);
         return node;
