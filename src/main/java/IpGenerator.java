@@ -8,6 +8,10 @@ public class IpGenerator {
     public static IpGenerator genGenrator(){
         return network_id_generator;
     }
+    public void resetBits(){
+        third_bit = 0;
+        fouth_bit =0;
+    }
 
     public void  updateBits(int created_network_size){
 

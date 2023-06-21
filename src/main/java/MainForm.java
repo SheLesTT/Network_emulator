@@ -720,6 +720,9 @@ public class MainForm extends javax.swing.JFrame {
         this.setVisible(true);
         amout_of_routers=-1;
         net =new Network();
+        gen.resetBits();
+        creator = new Creator(net,gen);
+
         routers_amount_field.setText("");
     }//GEN-LAST:event_create_another_network_butActionPerformed
 
