@@ -20,11 +20,11 @@ public class Printer implements IpTable, Nodeble{
     @JsonProperty
     ArrayList<String> linked_nodes = new ArrayList<>();
     @JsonProperty
-    String subnetwork ;
+    Subnetwork subnetwork ;
 
     public Printer(){};
 
-    public Printer(String id, String con_id, Network net, String subnetwork){
+    public Printer(String id, String con_id, Network net, Subnetwork subnetwork){
         this.ip = id;
         linked_nodes.add(con_id);
         this.net = net;
@@ -34,8 +34,8 @@ public class Printer implements IpTable, Nodeble{
 
     public Boolean changeIp(String id_to_replace){
         boolean result = false;
-        RouterPort port = (RouterPort) net.getNodeByID(subnetwork);
-        if(port.isIpAvailable(id_to_replace)){
+//        RouterPort port = (RouterPort) net.getNodeByID(subnetwork);
+        if(subnetwork.isIpAvailable(id_to_replace)){
             ip = id_to_replace;
             result = true;
         }
@@ -44,8 +44,7 @@ public class Printer implements IpTable, Nodeble{
 
     public MutableTreeNode addTreeNode(String ip){
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(this);
-//        DefaultMutableTreeNode node_ip = new DefaultMutableTreeNode("Ip " + this.ip);
-//        node.add(node_ip);
+
         return node;
     }
 
@@ -72,10 +71,6 @@ public class Printer implements IpTable, Nodeble{
         return linked_nodes;
     }
 
-    @Override
-    public String toString(){
-        return id;
-    }
     @JsonIgnore
     public String getName(){
         return "Printer " +number;

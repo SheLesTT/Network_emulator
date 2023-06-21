@@ -18,13 +18,13 @@ public class Node implements IpTable, Nodeble {
     @JsonProperty
     int number;
     @JsonProperty
-    String subnetwork;
+    Subnetwork subnetwork;
     @JsonProperty
     ArrayList<String> linked_nodes = new ArrayList<>();
 
     public Node(){};
 
-    public Node(String id, String con_id, Network net, String subnetwork){
+    public Node(String id, String con_id, Network net, Subnetwork subnetwork){
         this.ip = id;
         linked_nodes.add(con_id);
         this.net = net;
@@ -34,15 +34,13 @@ public class Node implements IpTable, Nodeble {
 
     public MutableTreeNode addTreeNode(String ip){
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(this);
-//        DefaultMutableTreeNode node_ip = new DefaultMutableTreeNode("Ip " + this.ip);
-//        node.add(node_ip);
         return node;
     }
     public Boolean changeIp(String id_to_replace){
         boolean result = false;
-        System.out.println(subnetwork);
-        RouterPort port = (RouterPort) net.getNodeByID(subnetwork);
-        if(port.isIpAvailable(id_to_replace)){
+//        System.out.println(subnetwork);
+//        RouterPort port = (RouterPort) net.getNodeByID(subnetwork);
+        if(subnetwork.isIpAvailable(id_to_replace)){
             ip = id_to_replace;
             result = true;
         }
@@ -61,21 +59,12 @@ public class Node implements IpTable, Nodeble {
         return type;
     }
 
-    public void printNodesConnections() {
-        for (String node_ip: linked_nodes){
-            IpTable node= net.getNodeByID(node_ip);
-            System.out.println(node.getType() + node.getIp());
 
-        }
-    }
     public ArrayList<String> getLinkedNodes() {
         return linked_nodes;
     }
 
-    @Override
-    public String toString(){
-        return id;
-    }
+
     @JsonIgnore
     public String getName(){
         return "Node " +number;

@@ -12,24 +12,22 @@ public class Creator {
         net.addRouter();
         return new Router(MaskLength,net.getNum_routers(),net);
     }
-    public Swithcboard createSwitchboard(String ip, String con_id,String subnetwork){
+    public Swithcboard createSwitchboard(String ip, String con_id,Subnetwork subnetwork){
         net.addSwitchboard();
         Swithcboard swithcboard = new Swithcboard(ip, con_id, net,subnetwork);
-//        System.out.println("Put switchboard with ip " + ip );
         net.putNode(swithcboard.getIp(),swithcboard);
         return swithcboard;
     }
 
-    public Node createNode(String ip, String con_id, String subnetwork){
+    public Node createNode(String ip, String con_id, Subnetwork subnetwork){
         net.addNode();
-
         Node node =  new Node(ip, con_id, net,subnetwork );
         net.putNode(node.getIp(), node);
         return node;
 
     }
 
-    public Printer createPrinter(String ip, String con_id, String subnetwork){
+    public Printer createPrinter(String ip, String con_id, Subnetwork subnetwork){
         net.addNode();
         Printer printer =  new Printer(ip, con_id, net, subnetwork);
         net.putNode(printer.getIp(), printer);
@@ -39,16 +37,20 @@ public class Creator {
 
 
     public RouterPort createPort( Router router , int subnetwork_size) {
+        String max_id = generator.generateMaxSubnetId(subnetwork_size);
+        String min_id = generator.generateMinSubnetId();
+        Subnetwork subnet = new Subnetwork(max_id,min_id);
 
-        RouterPort port = new RouterPort(net,generator.generateFirstAvailableId(),
-                generator.generateMaxSubnetId(subnetwork_size),
-                generator.generateMinSubnetId(), router);
-//       System.out.println("Put port with " + generator.generateFirstAvailableId());
+        RouterPort port = new RouterPort(net, subnet, generator.generateFirstAvailableId(), router);
+
         net.putNode(generator.generateFirstAvailableId(), port);
         generator.updateBits(subnetwork_size);
 
         return port;
     }
+//    public Subnetwork createSubnetwork(String max_ip, String min_ip){
+//        Subnetwork subnet = new
+//    }
 
 
     }

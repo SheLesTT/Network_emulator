@@ -4,16 +4,21 @@ import javax.swing.tree.MutableTreeNode;
 import java.util.ArrayList;
 import static java.lang.Math.pow;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Router implements Serializable{
 
 
     @JsonIgnore
     Network net = null;
+    @JsonProperty
     int mask_length;
+    @JsonProperty
     int number;
+    @JsonProperty
     int subnetwork_size = 0;
+    @JsonProperty
     double subnetwok_count = 0;
-//    IdGenerator generator = new IdGenerator();
     ArrayList<String> ports = new ArrayList<>();
     public Router (int mask_length, int number, Network net){
         this.mask_length = mask_length;
@@ -43,9 +48,7 @@ public class Router implements Serializable{
         }
     }
 
-    public void addLinkedNodesToPorts(){
 
-    }
 
     public MutableTreeNode addTreeNode(){
         DefaultMutableTreeNode router_node = new DefaultMutableTreeNode("router " + number );
@@ -59,49 +62,21 @@ public class Router implements Serializable{
     }
 
 
-    public void Print(){
-        System.out.println("router number" + number);
-        System.out.println("mask length" + mask_length);
-        System.out.println(subnetwork_size);
-        for(String port: ports){
-            System.out.println(port);
-            RouterPort port_rout = (RouterPort) net.all_nodes.get(port);
-            port_rout.Print();
-        }
-    }
+//    public void Print(){
+//        System.out.println("router number" + number);
+//        System.out.println("mask length" + mask_length);
+//        System.out.println(subnetwork_size);
+//        for(String port: ports){
+//            System.out.println(port);
+//            RouterPort port_rout = (RouterPort) net.all_nodes.get(port);
+//            port_rout.Print();
+//        }
+//    }
     public void setNet(Network net) {
         this.net = net;
     }
-    public int getMask_length() {
-        return mask_length;
-    }
-
-    public void setMask_length(int mask_length) {
-        this.mask_length = mask_length;
-    }
-
     public int getNumber() {
         return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public int getSubnetwork_size() {
-        return subnetwork_size;
-    }
-
-    public void setSubnetwork_size(int subnetwork_size) {
-        this.subnetwork_size = subnetwork_size;
-    }
-
-    public double getSubnetwok_count() {
-        return subnetwok_count;
-    }
-
-    public void setSubnetwok_count(double subnetwok_count) {
-        this.subnetwok_count = subnetwok_count;
     }
 
     public ArrayList<String> getPorts() {
@@ -111,6 +86,5 @@ public class Router implements Serializable{
     public void setPorts(ArrayList<String> ports) {
         this.ports = ports;
     }
-
 
 }

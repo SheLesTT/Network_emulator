@@ -10,13 +10,13 @@ public class IpGenerator {
     }
 
     public void  updateBits(int created_network_size){
-//        System.out.println("bits before update fourth bit "+ fouth_bit + " third bit " + third_bit);
+
         fouth_bit += created_network_size;
         if (fouth_bit >= 255){
             fouth_bit = fouth_bit-256;
             third_bit +=1;
         }
-//        System.out.println("bits after update fourth bit "+ fouth_bit + " third bit " + third_bit);
+
     }
     public String generateFirstAvailableId(){
         String id = "192.168." + Integer.toString(third_bit) + "." + Integer.toString(fouth_bit+1);

@@ -8,11 +8,7 @@ public class PathFinder {
     }
 
     public String BFS(String starting_node, String node_to_serach){
-
         HashMap<String ,String> prev = Solve(starting_node);
-        for (String key: prev.keySet()){
-//            System.out.println("Previous for node "+ key + " is " + prev.get(key));
-        }
         return reconstructPath(node_to_serach,prev);
 
     }
@@ -38,7 +34,6 @@ public class PathFinder {
 
                 }
             }
-
         }
        return prev;
     }
@@ -46,8 +41,6 @@ public class PathFinder {
        ArrayList<String> path = new ArrayList<>();
        path.add(node_to_serach);
        for(String at = node_to_serach; at !=null; at=prev.get(at)){
-//           System.out.println("Adding node" + at + " With previous" + prev.get(at));
-
            path.add(at);
        }
         Collections.reverse(path);
@@ -60,8 +53,7 @@ public class PathFinder {
            }else {
                str_path += node.getName() + " with ip " + node.getIp() + "\n";
            }
-//           System.out.println(str_path);
-//           System.out.println("Node "+node.getType()+" With ip " +node.getIp());
+
        }
        return str_path;
 
