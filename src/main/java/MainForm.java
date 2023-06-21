@@ -13,6 +13,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,11 +33,28 @@ public class MainForm extends javax.swing.JFrame {
     IpGenerator gen = IpGenerator.genGenrator();
     Network net = new Network();
     Creator creator = new Creator(net, gen);
-    int amout_of_routers;
+    int amout_of_routers =-1;
+    public  void addExit(JFrame frame){
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Perform any cleanup tasks or other necessary actions
+                // before exiting the program
+                System.exit(0);
+            }
+        });
+
+    }
 
     public MainForm() {
 
         initComponents();
+        addExit(this);
+        addExit(show_network_frame);
+        addExit(find_path_frame);
+
 
 
     }
@@ -60,6 +79,9 @@ public class MainForm extends javax.swing.JFrame {
         ip_to_be_replaced_field = new javax.swing.JTextField();
         ip_ro_replace_field = new javax.swing.JTextField();
         change_ip_button = new javax.swing.JToggleButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        create_another_network_but = new javax.swing.JButton();
         find_path_frame = new javax.swing.JFrame();
         jPanel2 = new javax.swing.JPanel();
         select_starting_node_comboBox = new JComboBox<Nodeble>();
@@ -87,7 +109,7 @@ public class MainForm extends javax.swing.JFrame {
         show_network_tree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane3.setViewportView(show_network_tree);
 
-        open_find_pass_panel_but.setText("find path");
+        open_find_pass_panel_but.setText("Поиск связи между узлами");
         open_find_pass_panel_but.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 open_find_pass_panel_butActionPerformed(evt);
@@ -112,10 +134,21 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        change_ip_button.setText("change_ip_hello");
+        change_ip_button.setText("change_ip");
         change_ip_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 change_ip_buttonActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Выберите узел ip которого хотите изменить");
+
+        jLabel3.setText("Введите новый ip");
+
+        create_another_network_but.setText("Create another network");
+        create_another_network_but.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                create_another_network_butActionPerformed(evt);
             }
         });
 
@@ -125,49 +158,65 @@ public class MainForm extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(136, Short.MAX_VALUE)
-                        .addComponent(add_sleep_button)
-                        .addGap(80, 80, 80))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(44, 44, 44)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(change_ip_button, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(46, 46, 46)
+                                            .addComponent(ip_to_be_replaced_field, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addContainerGap()
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(6, 6, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(open_find_pass_panel_but)
-                                    .addComponent(save_network_button)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(ip_to_be_replaced_field, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(69, 69, 69)
-                                .addComponent(ip_ro_replace_field, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(81, 81, 81)
-                                .addComponent(change_ip_button, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ip_ro_replace_field, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(create_another_network_but, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(save_network_button)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(add_sleep_button)
+                                        .addGap(12, 12, 12)))))
+                        .addGap(31, 31, 31))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(open_find_pass_panel_but)
+                        .addGap(18, 18, 18)))
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ip_to_be_replaced_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ip_ro_replace_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(31, 31, 31)
-                        .addComponent(change_ip_button, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
                         .addGap(18, 18, 18)
-                        .addComponent(open_find_pass_panel_but)
-                        .addGap(10, 10, 10)
-                        .addComponent(add_sleep_button)
-                        .addGap(48, 48, 48)
-                        .addComponent(save_network_button)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ip_to_be_replaced_field, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ip_ro_replace_field, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
+                        .addComponent(change_ip_button, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(save_network_button, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                            .addComponent(add_sleep_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(85, 85, 85)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(open_find_pass_panel_but, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(create_another_network_but, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -230,7 +279,7 @@ public class MainForm extends javax.swing.JFrame {
                         .addGap(195, 195, 195)
                         .addComponent(find_path_buttom))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
+                        .addGap(119, 119, 119)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -247,9 +296,9 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(select_final_node_comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addComponent(find_path_buttom)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(back_to_tree_view_button)
                 .addGap(56, 56, 56))
         );
@@ -331,7 +380,7 @@ public class MainForm extends javax.swing.JFrame {
         set_mask_length_group.add(radio_but_mask_length_24);
         radio_but_mask_length_24.setText("24");
 
-        create_router_with_chousen_mask.setText("create router with cousen mask");
+        create_router_with_chousen_mask.setText("create router with choosen mask");
         create_router_with_chousen_mask.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 create_router_with_chousen_maskActionPerformed(evt);
@@ -353,96 +402,111 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(routers_amount_field, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(radio_but_mask_length_28, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(radio_but_mask_length_27, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(radio_but_mask_length_26, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addGap(324, 324, 324))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(radio_but_mask_length_24, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(radio_but_mask_length_25, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(244, 369, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(load_network_button, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76)
-                .addComponent(create_network, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(314, 314, 314))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(load_network_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(create_network, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(radio_but_mask_length_24, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(274, 274, 274))
             .addGroup(layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addComponent(set_amount_of_routers_but)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(create_router_with_chousen_mask)
-                .addGap(214, 214, 214))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(set_amount_of_routers_but, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(routers_amount_field, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(radio_but_mask_length_28, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radio_but_mask_length_25, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(radio_but_mask_length_27, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(radio_but_mask_length_26, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(create_router_with_chousen_mask)))
+                .addGap(134, 134, 134))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addComponent(radio_but_mask_length_24)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(radio_but_mask_length_25)
-                    .addComponent(jLabel1))
-                .addGap(15, 15, 15)
-                .addComponent(radio_but_mask_length_26, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(radio_but_mask_length_27)
-                    .addComponent(routers_amount_field, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(radio_but_mask_length_28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(radio_but_mask_length_24)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(routers_amount_field, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(set_amount_of_routers_but, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radio_but_mask_length_25)
                         .addGap(18, 18, 18)
-                        .addComponent(create_router_with_chousen_mask, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(create_network, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(load_network_button, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(set_amount_of_routers_but)))
-                .addGap(0, 66, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(create_router_with_chousen_mask, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(radio_but_mask_length_26, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(radio_but_mask_length_27)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radio_but_mask_length_28)))
+                .addGap(90, 90, 90)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(load_network_button, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(create_network, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 73, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void create_networkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_networkActionPerformed
+        if(amout_of_routers == -1){
 
-       net.connectNetwork();
-       show_network_tree.setCellRenderer(new CustomTreeCellRenderer());
-        show_network_tree.setModel(new DefaultTreeModel(net.addInfoToGui()));
+            JOptionPane.showMessageDialog(this, "Set amount of routers and their masks before creating a network",
+                    "Network is not created", JOptionPane.INFORMATION_MESSAGE);
+        } else if (amout_of_routers>0) {
 
-        show_network_tree.addTreeSelectionListener(new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                TreePath selectedPath = e.getPath();
-                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) selectedPath.getLastPathComponent();
-                IpTable ipTable = (IpTable) selectedNode.getUserObject();
+            JOptionPane.showMessageDialog(this, "Set masks for all routers before creating a network",
+                    "Network is not created ", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            this.dispose();
+            net.connectNetwork();
+            show_network_tree.setCellRenderer(new CustomTreeCellRenderer());
+            show_network_tree.setModel(new DefaultTreeModel(net.addInfoToGui()));
 
-                ip_to_be_replaced_field.setText(ipTable.getIp());
-                System.out.println(ipTable.getIp() +" "+ ipTable.getName());
-            }
-        });
+            show_network_tree.addTreeSelectionListener(new TreeSelectionListener() {
+                @Override
+                public void valueChanged(TreeSelectionEvent e) {
+                    TreePath selectedPath = e.getPath();
+                    DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) selectedPath.getLastPathComponent();
+                    IpTable ipTable = (IpTable) selectedNode.getUserObject();
 
-       show_network_frame.setVisible(true);
-        show_network_frame.setSize(700, 700);
+                    ip_to_be_replaced_field.setText(ipTable.getIp());
+                    System.out.println(ipTable.getIp() + " " + ipTable.getName());
+                }
+            });
 
+            show_network_frame.setVisible(true);
+            show_network_frame.setSize(700, 500);
+        }
     }//GEN-LAST:event_create_networkActionPerformed
 
     private void create_router_with_chousen_maskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_router_with_chousen_maskActionPerformed
@@ -450,6 +514,10 @@ public class MainForm extends javax.swing.JFrame {
         if(amout_of_routers == 0) {
             JOptionPane.showMessageDialog(this, "All routers mask set, create network now",
                     "all set", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(amout_of_routers==-1){
+            JOptionPane.showMessageDialog(this, "Set amount of routers before choosing mask",
+                    "routers amount is not set", JOptionPane.INFORMATION_MESSAGE);
         }else{
             radio_but_mask_length_24.setActionCommand("24");
             radio_but_mask_length_25.setActionCommand("25");
@@ -457,32 +525,42 @@ public class MainForm extends javax.swing.JFrame {
             radio_but_mask_length_27.setActionCommand("27");
             radio_but_mask_length_28.setActionCommand("28");
             ButtonModel model = set_mask_length_group.getSelection();
+            if(model == null){
 
-            String mask =  model.getActionCommand();
+                JOptionPane.showMessageDialog(this, "Select mask length from radiobuttons",
+                        "choose mask length", JOptionPane.INFORMATION_MESSAGE);
+            }else {
+                String mask = model.getActionCommand();
 
-            int mask_int = Integer.parseInt(mask);
+                int mask_int = Integer.parseInt(mask);
 
-            Router router =creator.createRouter(mask_int);
-            router.addPorts(creator);
-            net.addRouter(router);
-            amout_of_routers--;
+                Router router = creator.createRouter(mask_int);
+                router.addPorts(creator);
+                net.addRouter(router);
+                amout_of_routers--;
+            }
         }
     }//GEN-LAST:event_create_router_with_chousen_maskActionPerformed
 
     private void set_amount_of_routers_butActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_set_amount_of_routers_butActionPerformed
 
-        try {
-            int amout= Integer.parseInt(routers_amount_field.getText());
+        if(amout_of_routers!=-1){
+            JOptionPane.showMessageDialog(this, "Amount of routers is already set create a network now ",
+                    "Amount is already set", JOptionPane.INFORMATION_MESSAGE);
+        }else {
+            try {
+                int amout = Integer.parseInt(routers_amount_field.getText());
 
-            if(amout >0 & amout< 257){
-                amout_of_routers = amout;
-            }else {
-                JOptionPane.showMessageDialog(this, "Amount of routers should be more than 0 and  less than 256 \n Choose  again",
+                if (amout > 0 & amout < 257) {
+                    amout_of_routers = amout;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Amount of routers should be more than 0 and  less than 256 \n Choose  again",
+                            "Not valid amount", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Amount of routers should be an integer \n Choose  again",
                         "Not valid amount", JOptionPane.WARNING_MESSAGE);
             }
-        }catch (NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Amount of routers should be an integer \n Choose  again",
-                    "Not valid amount", JOptionPane.WARNING_MESSAGE);
         }
 
 
@@ -522,14 +600,14 @@ public class MainForm extends javax.swing.JFrame {
 
 
         find_path_frame.setVisible(true);
-        find_path_frame.setSize(700, 700);
+        find_path_frame.setSize(600, 600);
 
     }//GEN-LAST:event_open_find_pass_panel_butActionPerformed
 
     private void back_to_tree_view_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_to_tree_view_buttonActionPerformed
         find_path_frame.dispose();
         show_network_frame.setVisible(true);
-        show_network_frame.setSize(700, 700);
+        show_network_frame.setSize(700, 500);
     }//GEN-LAST:event_back_to_tree_view_buttonActionPerformed
 
     private void find_path_buttomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_find_path_buttomActionPerformed
@@ -562,26 +640,42 @@ public class MainForm extends javax.swing.JFrame {
         String data = mapper.writeValueAsString(net);
         System.out.println(data);
 
-        mapper.writeValue(new File("output.json"), net);
+        JFileChooser fileChooser = new JFileChooser();
+        int returnValue = fileChooser.showSaveDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            String filePath = fileChooser.getSelectedFile().getPath();
 
+            mapper.writeValue(new File(filePath), net);
+
+            JOptionPane.showMessageDialog(this, "Network saved successfully",
+                    "Network is saved", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_save_network_buttonActionPerformed
 
     private void load_network_buttonActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_load_network_buttonActionPerformed
+        if(amout_of_routers !=-1){
 
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("."));
-        int response = fileChooser.showOpenDialog(null);
+            JOptionPane.showMessageDialog(this, "You already creating a network finish it before loading another one",
+                    "Network is not finished", JOptionPane.INFORMATION_MESSAGE);
+        }else {
+            amout_of_routers = 0;
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File("."));
+            int response = fileChooser.showOpenDialog(null);
 
-        String file = null;
-        if(response == JFileChooser.APPROVE_OPTION){
-            file = fileChooser.getSelectedFile().getAbsolutePath();
-            System.out.println(file);
+            String file = null;
+            if (response == JFileChooser.APPROVE_OPTION) {
+                file = fileChooser.getSelectedFile().getAbsolutePath();
+                System.out.println(file);
+            }
+            ObjectMapper mapper = new ObjectMapper();
+            net = mapper.readValue(new File(file), Network.class);
+
+            net.finishReading();
+            net.setNetToNodes();
+//          create_another_network_butActionPerformed(evt);
+
         }
-        ObjectMapper mapper = new ObjectMapper();
-        net = mapper.readValue(new File(file), Network.class);
-
-        net.finishReading();
-        net.setNetToNodes();
 
     }//GEN-LAST:event_load_network_buttonActionPerformed
 
@@ -599,21 +693,35 @@ public class MainForm extends javax.swing.JFrame {
 
            JOptionPane.showMessageDialog(this, "Не корректный ip",
                    "Ip s not valid", JOptionPane.INFORMATION_MESSAGE);
-       }else{
+       }else {
            IpTable node = net.getNodeByID(ip_to__be_replaced);
-           if(!node.changeIp(ip_to_replace)){
+           if (node == null) {
 
-               JOptionPane.showMessageDialog(this, "Невозможно сменить ip на данный",
-                       "Ip s not available", JOptionPane.ERROR_MESSAGE);
-           }else{
-               JOptionPane.showMessageDialog(this, "Ip изменен",
-                       "Ip is changed ", JOptionPane.INFORMATION_MESSAGE);
+               JOptionPane.showMessageDialog(this, "Выберите узел для которого хотите сменить ip",
+                       "Node is not selected", JOptionPane.INFORMATION_MESSAGE);
+           } else {
+               if (!node.changeIp(ip_to_replace)) {
 
-               show_network_tree.setModel(new DefaultTreeModel(net.addInfoToGui()));
+                   JOptionPane.showMessageDialog(this, "Невозможно сменить ip на данный",
+                           "Ip s not available", JOptionPane.ERROR_MESSAGE);
+               } else {
+                   JOptionPane.showMessageDialog(this, "Ip изменен",
+                           "Ip is changed ", JOptionPane.INFORMATION_MESSAGE);
+
+                   show_network_tree.setModel(new DefaultTreeModel(net.addInfoToGui()));
+               }
            }
-        }
+       }
 
     }//GEN-LAST:event_change_ip_buttonActionPerformed
+
+    private void create_another_network_butActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_another_network_butActionPerformed
+        show_network_frame.dispose();
+        this.setVisible(true);
+        amout_of_routers=-1;
+        net =new Network();
+        routers_amount_field.setText("");
+    }//GEN-LAST:event_create_another_network_butActionPerformed
 
 
     /**
@@ -649,6 +757,7 @@ public class MainForm extends javax.swing.JFrame {
                 new MainForm().setVisible(true);
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -657,6 +766,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton add_sleep_button;
     private javax.swing.JButton back_to_tree_view_button;
     private javax.swing.JToggleButton change_ip_button;
+    private javax.swing.JButton create_another_network_but;
     private javax.swing.JButton create_network;
     private javax.swing.JButton create_router_with_chousen_mask;
     private javax.swing.JButton find_path_buttom;
@@ -665,6 +775,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField ip_to_be_replaced_field;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
@@ -686,4 +798,5 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JFrame show_network_frame;
     private javax.swing.JTree show_network_tree;
     // End of variables declaration//GEN-END:variables
+
 }

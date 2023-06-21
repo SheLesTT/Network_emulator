@@ -107,8 +107,12 @@ public class RouterPort implements IpTable {
         }
         for(int i =0; i < num_nodes; i++){
             String ip_given =  subnet.giveIp();
-            swithcboard.linked_nodes.add(ip_given);
-            creator.createNode(ip_given,swithcboard.getIp(), subnet );
+            if(ip_given ==""){
+                i =num_nodes;
+            }else {
+                swithcboard.linked_nodes.add(ip_given);
+                creator.createNode(ip_given, swithcboard.getIp(), subnet);
+            }
         }
 
     }

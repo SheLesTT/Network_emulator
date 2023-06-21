@@ -31,8 +31,8 @@ public class Subnetwork {
             str_ip = ipTransormator.intToStringIp(ip);
             ips_used.add(str_ip);
         }else {
-            System.out.println("ip is out of bounds for his subnework");
-            str_ip =null;
+//            System.out.println("ip is out of bounds for his subnework");
+            str_ip ="";
         }
 
         return  str_ip;
