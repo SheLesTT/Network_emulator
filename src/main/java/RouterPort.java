@@ -204,5 +204,12 @@ public class RouterPort implements IpTable {
     public String getName() {
         return "Port of Router " + router.getNumber() ;
     }
+
+    @Override
+    public Boolean getSleep() {
+        return false;
+    }
+
+
 }
 

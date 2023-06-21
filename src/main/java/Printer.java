@@ -10,7 +10,7 @@ public class Printer implements IpTable, Nodeble{
     @JsonIgnore
     Network net;
     @JsonProperty
-    Boolean sleep = true;
+    Boolean sleep = false;
     @JsonProperty
     private String ip;
     @JsonProperty
@@ -43,9 +43,9 @@ public class Printer implements IpTable, Nodeble{
     }
 
     public MutableTreeNode addTreeNode(String ip){
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode("printer " + number);
-        DefaultMutableTreeNode node_ip = new DefaultMutableTreeNode("Ip " + this.ip);
-        node.add(node_ip);
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode(this);
+//        DefaultMutableTreeNode node_ip = new DefaultMutableTreeNode("Ip " + this.ip);
+//        node.add(node_ip);
         return node;
     }
 

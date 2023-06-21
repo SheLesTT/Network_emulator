@@ -496,8 +496,8 @@ public class MainForm extends javax.swing.JFrame {
                 if (userObject instanceof IpTable) {
                     IpTable ipTable = (IpTable) userObject;
                     component.setText(ipTable.getName());
-                    if (ipTable.getType().equals("Printer")) {
-                        component.setForeground(Color.RED);
+                    if (ipTable.getSleep()) {
+                        component.setForeground(Color.GRAY);
                     }
                 }
             }
@@ -525,6 +525,19 @@ public class MainForm extends javax.swing.JFrame {
        show_network_tree.setCellRenderer(new CustomTreeCellRenderer());
         show_network_tree.setModel(new DefaultTreeModel(net.addInfoToGui()));
 
+        show_network_tree.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
+            public void valueChanged(TreeSelectionEvent e) {
+                TreePath selectedPath = e.getPath();
+                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) selectedPath.getLastPathComponent();
+                IpTable ipTable = (IpTable) selectedNode.getUserObject();
+                // Process the selected node and display information
+//                String nodeText = selectedNode.toString();
+                ip_to_be_replaced_field.setText(ipTable.getIp());
+                System.out.println(ipTable.getIp() +" "+ ipTable.getName());
+            }
+        });
+
        show_network_frame.setVisible(true);
         show_network_frame.setSize(700, 700);
 
@@ -545,11 +558,17 @@ public class MainForm extends javax.swing.JFrame {
     private  class NodebleListCellRender extends DefaultListCellRenderer{
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus){
-            if(value instanceof Nodeble){
-                value = ((Nodeble) value).getName();
 
+            JLabel component = (JLabel) super.getListCellRendererComponent(list,value, index, isSelected,cellHasFocus);
+            if(value instanceof Nodeble){
+                component.setText(((Nodeble)value).getName());
+//                value = ((Nodeble) value).getName();
+
+                if (((Nodeble)value).getSleep()) {
+                    component.setForeground(Color.GRAY);
+                }
             }
-            return super.getListCellRendererComponent(list,value, index, isSelected,cellHasFocus);
+            return component;
         }
 
     }
@@ -697,6 +716,8 @@ public class MainForm extends javax.swing.JFrame {
 
     private void add_sleep_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_sleep_buttonActionPerformed
        net.setSleep();
+       DefaultTreeModel defaultTreeModel = (DefaultTreeModel) show_network_tree.getModel();
+       defaultTreeModel.reload();
     }//GEN-LAST:event_add_sleep_buttonActionPerformed
 
     private void change_ip_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_change_ip_buttonActionPerformed
@@ -724,15 +745,17 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_change_ip_buttonActionPerformed
 
     private void create_test_tree_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_test_tree_buttonActionPerformed
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Network");
-        for(String node_id: net.all_nodes.keySet()){
-            IpTable node = net.getNodeByID(node_id);
-            DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(node);
-            root.add(defaultMutableTreeNode);
-        }
-        DefaultTreeModel defaultTreeModel = new DefaultTreeModel(root);
-        test_tree.setModel(defaultTreeModel);
-        test_tree.setCellRenderer(new CustomTreeCellRenderer());
+//        show_network_tree.setModel(new DefaultTreeModel(net.addInfoToGui()));
+
+//        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Network");
+//        for(String node_id: net.all_nodes.keySet()){
+//            IpTable node = net.getNodeByID(node_id);
+//            DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(node);
+//            root.add(defaultMutableTreeNode);
+//        }
+//        DefaultTreeModel defaultTreeModel = new DefaultTreeModel(root);
+//        test_tree.setModel(defaultTreeModel);
+        test_tree.setModel(new DefaultTreeModel(net.addInfoToGui()));
         test_tree.addTreeSelectionListener(new TreeSelectionListener() {
             @Override
             public void valueChanged(TreeSelectionEvent e) {

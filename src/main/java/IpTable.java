@@ -16,4 +16,5 @@ public interface IpTable {
      public MutableTreeNode addTreeNode(String ip);
      public void printNodesConnections();
      public ArrayList<String> getLinkedNodes();
+     public Boolean getSleep();
 }

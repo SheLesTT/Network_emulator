@@ -44,11 +44,11 @@ public Swithcboard(){};
         return  result;
     }
     public MutableTreeNode addTreeNode(String backlink_connection){
-        DefaultMutableTreeNode switch_board_node = new DefaultMutableTreeNode("switchboard " + number);
-        DefaultMutableTreeNode char_node  = new DefaultMutableTreeNode("Network characteristics");
-        DefaultMutableTreeNode id_switch_node = new DefaultMutableTreeNode("Ip " +ip);
-        char_node.add(id_switch_node);
-        switch_board_node.add(char_node);
+        DefaultMutableTreeNode switch_board_node = new DefaultMutableTreeNode(this);
+//        DefaultMutableTreeNode char_node  = new DefaultMutableTreeNode("Network characteristics");
+//        DefaultMutableTreeNode id_switch_node = new DefaultMutableTreeNode("Ip " +ip);
+//        char_node.add(id_switch_node);
+//        switch_board_node.add(char_node);
         for(String id_node: linked_nodes){
             if(!(id_node.equals(backlink_connection))) {
                 IpTable node = net.getNodeByID(id_node);
@@ -104,6 +104,9 @@ public Swithcboard(){};
         return linked_nodes;
     }
 
+    public Boolean getSleep(){
+        return false;
+    }
 //    @Override
 //    public int getNumber() {
 //        return number;

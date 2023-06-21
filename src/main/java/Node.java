@@ -33,9 +33,9 @@ public class Node implements IpTable, Nodeble {
     }
 
     public MutableTreeNode addTreeNode(String ip){
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode("node " + number);
-        DefaultMutableTreeNode node_ip = new DefaultMutableTreeNode("Ip " + this.ip);
-        node.add(node_ip);
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode(this);
+//        DefaultMutableTreeNode node_ip = new DefaultMutableTreeNode("Ip " + this.ip);
+//        node.add(node_ip);
         return node;
     }
     public Boolean changeIp(String id_to_replace){
